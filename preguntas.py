@@ -645,8 +645,8 @@ def pregunta_12():
     }
 
     """
-     with open('data.csv', "r") as file:
-        data = file.readlines()
+    with open('data.csv', "r") as file:
+         data = file.readlines()
     #Limpieza
         
     #Eliminar el retorno de carro
