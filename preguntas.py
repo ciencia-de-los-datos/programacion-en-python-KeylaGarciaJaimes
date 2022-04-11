@@ -26,9 +26,8 @@ def pregunta_01():
     214
 
     """
-    ruta = r'C:\Users\Acer\Documents\GitHub\programacion-en-python-KeylaGarciaJaimes\data.csv'
-    file = open(ruta,'r',encoding="utf8")
-    data = file.readlines()
+     with open('data.csv', "r") as file:
+        data = file.readlines()
     #Limpieza
 
     #Eliminar el retorno de carro
