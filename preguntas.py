@@ -467,12 +467,10 @@ def pregunta_08():
 
     list_tuple_all = sorted([((value,sorted(list(set(row[0] for row in list_tuple if value in row[1])))))for value in number_col],key=itemgetter(0), reverse = False)
 
-    list_tuple_all
+    #for i in range(len(list(number_col))):
+        #x = print(list_tuple_all[i])
 
-    for i in range(len(list(number_col))):
-        x = print(list_tuple_all[i])
-
-    return x
+    return list_tuple_all
     
 
 
