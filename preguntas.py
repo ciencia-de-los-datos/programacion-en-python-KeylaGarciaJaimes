@@ -94,6 +94,14 @@ def pregunta_02():
 pregunta_02()
 
 
+from operator import itemgetter
+
+#Convertir la Tupla en un diccionario dentro de un diccionario
+def Convert(tup, di):
+    for a, b in tup:
+        di.setdefault(a, []).append(b)
+    return di
+    
 def pregunta_03():
     """
     Retorne la suma de la columna 2 por cada letra de la primera columna como una lista
