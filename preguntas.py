@@ -206,11 +206,11 @@ def Convert(tup, di):
     return di
 
 def mergeDict(dict_1, dict_2):
-        new_dict = {**dict_2, **dict_1}
-        for key, value in new_dict.items():
-            if key in dict_1 and key in dict_2:
-                new_dict[key] = [value , dict_2[key]]
-        return new_dict
+   new_dict = {**dict_2, **dict_1}
+   for key, value in new_dict.items():
+       if key in dict_1 and key in dict_2:
+               new_dict[key] = [value , dict_2[key]]
+   return new_dict
 
 def pregunta_05():
     """
