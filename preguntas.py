@@ -198,6 +198,12 @@ def pregunta_04():
     
     return list_num
 
+from operator import itemgetter
+
+def Convert(tup, di):
+    for a, b in tup:
+        di.setdefault(a, []).append(b)
+    return di
 
 def pregunta_05():
     """
@@ -214,7 +220,56 @@ def pregunta_05():
     ]
 
     """
-    return
+    with open('data.csv', "r") as file:
+        data = file.readlines()
+        #Limpieza
+        
+    #Eliminar el retorno de carro
+    data = [line.replace('\n', '') for line in data]
+
+    #Quitar el espacio en blanco y cambairlo por ','
+    data = [line.replace('\t', ',') for line in data]
+
+    data = [line.split(',') for line in data]
+
+    #Extraer la columna 1 y 2 en una nueva lista 
+
+    col_2 = [data[i][:2] for i in  range(len(data))]
+
+    # Volver los valores de la lista en int
+    for line in range(len(col_2)):
+        col_2[line][1] = int(col_2[line][1])
+
+    #Volver la lista en tupla
+    my_tuple = [tuple (col_2) for col_2 in col_2]
+
+    my_dict = {}
+
+    Convert(my_tuple, my_dict)
+
+    dic_max = {k:max(i) for k, i in my_dict.items()}
+    dic_min = {k:min(i) for k, i in my_dict.items()}
+
+    def mergeDict(dict_1, dict_2):
+        new_dict = {**dict_2, **dict_1}
+        for key, value in new_dict.items():
+            if key in dict_1 and key in dict_2:
+                new_dict[key] = [value , dict_2[key]]
+        return new_dict
+
+    new_dict = mergeDict(dic_max, dic_min)
+
+    # Volver los valores de la lista en tupla
+    for k, v in new_dict.items():
+        new_dict[k] = tuple(v)
+
+    list_of_tuples = [(k,v) for (k, v) in new_dict.items()]
+    #Quitar la tupla dentro de la tupla
+    list_good = [(x, y, z) for x, (y, z) in list_of_tuples]
+
+    list_good = sorted(list_good, key = itemgetter(0), reverse=False)
+
+    return list_good
 
 
 def pregunta_06():
