@@ -379,7 +379,7 @@ def pregunta_07():
     """
     with open('data.csv', "r") as file:
         data = file.readlines()
-     #Limpieza
+    #Limpieza
         
     #Eliminar el retorno de carro
     data = [line.replace('\n', '') for line in data]
@@ -432,7 +432,36 @@ def pregunta_08():
     ]
 
     """
-    return
+    with open('data.csv', "r") as file:
+        data = file.readlines()
+
+
+    
+    #Limpieza
+        
+    #Eliminar el retorno de carro
+    data = [line.replace('\n', '') for line in data]
+
+    #Quitar el espacio en blanco y cambairlo por ','
+    data = [line.replace('\t', ',') for line in data]
+
+    data = [line.split(',') for line in data]
+
+    #Extraer la columna 1 y 2 en una nueva lista 
+    col_2 = [data[i][:2] for i in  range(len(data))]
+
+    list_tuple = sorted([row[0:2]for row in col_2])
+
+    number_col = set([row[1] for row in list_tuple])
+
+    list_tuple_all = sorted([((value,sorted(list(set(row[0] for row in list_tuple if value in row[1])))))for value in number_col],key=itemgetter(0), reverse = False)
+
+    list_tuple_all
+
+    for i in range(len(list(number_col))):
+         x = print(list_tuple_all[i])
+    return x
+    
 
 
 def pregunta_09():
