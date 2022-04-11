@@ -12,6 +12,11 @@ Utilice el archivo `data.csv` para resolver las preguntas.
 
 """
 
+def sum_of_list (l):
+    total = 0
+    for val in l:
+        total = total + val
+    return total
 
 def pregunta_01():
     """
@@ -21,7 +26,31 @@ def pregunta_01():
     214
 
     """
-    return
+    ruta = r'C:\Users\Acer\Documents\GitHub\programacion-en-python-KeylaGarciaJaimes\data.csv'
+    file = open(ruta,'r',encoding="utf8")
+    data = file.readlines()
+    #Limpieza
+
+    #Eliminar el retorno de carro
+    data = [line.replace('\n', '') for line in data]
+
+    #Quitar el espacio en blanco y cambairlo por ','
+    data = [line.replace('\t', ',') for line in data]
+
+    #Crear lista
+    data = [line.split(',') for line in data] 
+
+    #Extraer la columna 2 de la lista dentro de la lista
+    data_col_2 = [data[i][1] for i in  range(len(data))]
+
+    # Volver los valores de la lista números
+    num_col_2 = list(map(int, data_col_2))
+
+    suma = sum_of_list(num_col_2)
+
+    return suma
+
+pregunta_01()
 
 
 def pregunta_02():
