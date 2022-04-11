@@ -90,6 +90,7 @@ def pregunta_02():
 
     list_num = sorted(list_.items())
     return list_num
+
 pregunta_02()
 
 
@@ -143,6 +144,7 @@ def pregunta_03():
 
      
     return list_of_tuples   
+
 pregunta_03()
 
 
@@ -168,7 +170,35 @@ def pregunta_04():
     ]
 
     """
-    return
+    with open('data.csv', "r") as file:
+        data = file.readlines()
+
+    #Eliminar el retorno de carro
+    data = [line.replace('\n', '') for line in data]
+
+    #Quitar el espacio en blanco y cambairlo por ','
+    data = [line.replace('\t', ',') for line in data]
+
+    #crear lista
+    data = [line.split(',') for line in data]
+
+    #extraer filas de fechas
+    fechas = [data[i][2] for i in range(len(data))]
+    mes = [fechas[i][5:7] for i in range(len(data)) ]
+
+    list_ = {}
+
+    #usar get para contar elementos. 
+    # Al llamar get de esta manera obtengo el recuento actual de una letra dada o 0 (valor predetermiando)
+
+    for M in mes:
+        list_[M] = list_.get(M, 0) + 1
+
+    list_num = sorted(list_.items())
+    
+    return list_num
+
+pregunta_04()
 
 
 def pregunta_05():
