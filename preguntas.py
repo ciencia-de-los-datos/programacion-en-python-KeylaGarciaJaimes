@@ -484,6 +484,37 @@ def pregunta_09():
     }
 
     """
+    with open('data.csv', "r") as file:
+        data = file.readlines()
+    #Limpieza
+        
+    #Eliminar el retorno de carro
+    data = [line.replace('\n', '') for line in data]
+
+    #Quitar el espacio en blanco y cambairlo por ','
+    data = [line.replace('\t', ',') for line in data]
+
+    data = [line.split(',') for line in data]
+    #Sacar las posiciones de los elementos mayores a 5
+    lista_diccionario = [[value for value in row if len(value) >=5] for row in data]
+    #Eliminar los valores 0 de la lista anterior
+    lista_diccionario = [row[1:] for row in lista_diccionario]
+
+    #dividir el str por los ':'
+    list_key = []
+    for row in lista_diccionario:
+        for i in range(len(row)):
+            a,b =row[i].split(":")
+            list_key.append(a)
+        list_key
+
+    #volver la lista diccionario organizado
+    my_list = dict(sorted((a, list_key.count(a)) for a in set(list_key)))
+   
+
+    return my_list
+
+
     return
 
 
