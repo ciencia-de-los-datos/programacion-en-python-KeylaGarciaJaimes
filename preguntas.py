@@ -26,7 +26,7 @@ def pregunta_01():
     214
 
     """
-     with open('data.csv', "r") as file:
+    with open('data.csv', "r") as file:
         data = file.readlines()
     #Limpieza
 
