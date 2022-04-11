@@ -49,8 +49,6 @@ def pregunta_01():
 
     return suma
 
-pregunta_01()
-
 
 def pregunta_02():
     """
@@ -91,17 +89,14 @@ def pregunta_02():
     list_num = sorted(list_.items())
     return list_num
 
-pregunta_02()
-
 
 from operator import itemgetter
-
 #Convertir la Tupla en un diccionario dentro de un diccionario
 def Convert(tup, di):
     for a, b in tup:
         di.setdefault(a, []).append(b)
     return di
-    
+
 def pregunta_03():
     """
     Retorne la suma de la columna 2 por cada letra de la primera columna como una lista
@@ -153,9 +148,6 @@ def pregunta_03():
      
     return list_of_tuples   
 
-pregunta_03()
-
-
 def pregunta_04():
     """
     La columna 3 contiene una fecha en formato `YYYY-MM-DD`. Retorne la cantidad de
@@ -205,8 +197,6 @@ def pregunta_04():
     list_num = sorted(list_.items())
     
     return list_num
-
-pregunta_04()
 
 
 def pregunta_05():
