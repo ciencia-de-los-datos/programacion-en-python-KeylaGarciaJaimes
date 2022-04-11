@@ -205,6 +205,13 @@ def Convert(tup, di):
         di.setdefault(a, []).append(b)
     return di
 
+def mergeDict(dict_1, dict_2):
+        new_dict = {**dict_2, **dict_1}
+        for key, value in new_dict.items():
+            if key in dict_1 and key in dict_2:
+                new_dict[key] = [value , dict_2[key]]
+        return new_dict
+
 def pregunta_05():
     """
     Retorne una lista de tuplas con el valor maximo y minimo de la columna 2 por cada
@@ -250,13 +257,6 @@ def pregunta_05():
     dic_max = {k:max(i) for k, i in my_dict.items()}
     dic_min = {k:min(i) for k, i in my_dict.items()}
 
-    def mergeDict(dict_1, dict_2):
-        new_dict = {**dict_2, **dict_1}
-        for key, value in new_dict.items():
-            if key in dict_1 and key in dict_2:
-                new_dict[key] = [value , dict_2[key]]
-        return new_dict
-
     new_dict = mergeDict(dic_max, dic_min)
 
     # Volver los valores de la lista en tupla
@@ -264,6 +264,7 @@ def pregunta_05():
         new_dict[k] = tuple(v)
 
     list_of_tuples = [(k,v) for (k, v) in new_dict.items()]
+
     #Quitar la tupla dentro de la tupla
     list_good = [(x, y, z) for x, (y, z) in list_of_tuples]
 
