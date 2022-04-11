@@ -67,7 +67,30 @@ def pregunta_02():
     ]
 
     """
-    return
+    with open('data.csv', "r") as file:
+        data = file.readlines()
+        #Limpieza
+    
+    #Eliminar el retorno de carro
+    data = [line.replace('\n', '') for line in data]
+
+    #Quitar el espacio en blanco y cambairlo por ','
+    data = [line.replace('\t', ',') for line in data]
+    #Extraer la columna 1 en una nueva lista 
+
+    data_col_1 = [i[0] for i in data [0:]]
+
+    list_ = {}
+
+    #usar get para contar elementos. 
+    # Al llamar get de esta manera obtengo el recuento actual de una letra dada o 0 (valor predetermiando)
+
+    for letter in data_col_1:
+        list_[letter] = list_.get(letter, 0) + 1
+
+    list_num = sorted(list_.items())
+    return list_num
+pregunta_02()
 
 
 def pregunta_03():
