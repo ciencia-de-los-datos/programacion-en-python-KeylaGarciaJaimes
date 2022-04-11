@@ -108,7 +108,42 @@ def pregunta_03():
     ]
 
     """
-    return
+    with open('data.csv', "r") as file:
+        data = file.readlines()
+    #Limpieza
+    
+    #Eliminar el retorno de carro
+    data = [line.replace('\n', '') for line in data]
+
+    #Quitar el espacio en blanco y cambairlo por ','
+    data = [line.replace('\t', ',') for line in data]
+
+    data = [line.split(',') for line in data]
+
+    #Extraer la columna 1 y 2 en una nueva lista 
+
+    col_2 = [data[i][:2] for i in  range(len(data))]
+
+    # Volver los valores de la lista números
+    for line in range(len(col_2)):
+        col_2[line][1] = int(col_2[line][1])
+
+    #Volver la lista en tupla
+    my_tuple = [tuple (l) for l in col_2]
+
+    my_dict = {}
+
+    Convert(my_tuple, my_dict)
+
+    sum_dict = {k:sum(i) for k, i in my_dict.items()}
+
+    list_of_tuples = [(k,v) for k, v in sum_dict.items()]
+
+    list_of_tuples = sorted(list_of_tuples, key = itemgetter(0), reverse=False)
+
+     
+    return list_of_tuples   
+pregunta_03()
 
 
 def pregunta_04():
