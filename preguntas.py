@@ -229,7 +229,7 @@ def pregunta_05():
     """
     with open('data.csv', "r") as file:
         data = file.readlines()
-        #Limpieza
+    #Limpieza
         
     #Eliminar el retorno de carro
     data = [line.replace('\n', '') for line in data]
@@ -273,6 +273,27 @@ def pregunta_05():
     return list_good
 
 
+from operator import itemgetter
+
+#unir los valores para una misma clave
+def merge_list_of_dictionaries(dict_list):
+  new_dict = {}
+  for d in dict_list:
+    for d_key in d:
+      if d_key not in new_dict:
+        new_dict[d_key] = []
+      new_dict[d_key].append(d[d_key])
+  return new_dict
+
+#Unir el max y el min en un nuevo dic
+def mergeDict(dict_1, dict_2):
+   new_dict_2 = {**dict_1, **dict_2}
+   for key, value in new_dict_2.items():
+       if key in dict_1 and key in dict_2:
+               new_dict_2[key] = [value , dict_1[key]]
+   return new_dict_2
+
+
 def pregunta_06():
     """
     La columna 5 codifica un diccionario donde cada cadena de tres letras corresponde a
@@ -295,7 +316,49 @@ def pregunta_06():
     ]
 
     """
-    return
+    with open('data.csv', "r") as file:
+        data = file.readlines()
+    #Limpieza
+    
+    #Eliminar el retorno de carro
+    data = [line.replace('\n', '') for line in data]
+
+    #Quitar el espacio en blanco y cambairlo por ','
+    data = [line.replace('\t', ',') for line in data]
+
+    data = [line.split(',') for line in data]
+
+    lista_diccionario = [[value for value in row if len(value) >=5] for row in data]
+    lista_diccionario = [row[1:] for row in lista_diccionario]
+
+    diccionario = {}
+    parte_3 = []
+    for row in lista_diccionario:
+        for i in range(len(row)):
+            a,b =row[i].split(":")
+            diccionario[a] = int(b)
+            parte_3.append(diccionario)
+            diccionario = {}
+   #diccionario con los valores para cada key
+    new_dict = merge_list_of_dictionaries(parte_3)
+    #max y min de cada valor
+    dic_max = {k:max(i) for k, i in new_dict.items()}
+    dic_min = {k:min(i) for k, i in new_dict.items()}
+
+    new_dict = mergeDict(dic_max, dic_min)
+
+    # Volver los valores de lista (max y min) en tupla
+    for k, v in new_dict.items():
+        new_dict[k] = tuple(v)
+
+    list_of_tuples = [(k,v) for (k, v) in new_dict.items()]
+
+    list_good = [(x, y, z) for x, (y, z) in list_of_tuples]
+
+    list_good = sorted(list_good, key = itemgetter(0), reverse=False)
+
+    return list_good    
+
 
 
 def pregunta_07():
