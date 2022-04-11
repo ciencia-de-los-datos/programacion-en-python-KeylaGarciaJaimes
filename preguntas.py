@@ -24,13 +24,26 @@ def Convert(tup, di):
         di.setdefault(a, []).append(b)
     return di
 
+def Convert_1(tup, di):
+    for a, b in tup:
+        di.setdefault(b, []).append(a)
+    return di
 
-def mergeDict(dict_1, dict_2):
+
+def mergeDict_1(dict_1, dict_2):
    new_dict = {**dict_2, **dict_1}
    for key, value in new_dict.items():
        if key in dict_1 and key in dict_2:
                new_dict[key] = [value , dict_2[key]]
    return new_dict
+
+def mergeDict_2(dict_1, dict_2):
+   new_dict_2 = {**dict_1, **dict_2}
+   for key, value in new_dict_2.items():
+       if key in dict_1 and key in dict_2:
+               new_dict_2[key] = [value , dict_1[key]]
+   return new_dict_2
+
 
 #unir los valores para una misma clave
 def merge_list_of_dictionaries(dict_list):
@@ -273,7 +286,7 @@ def pregunta_05():
     dic_max = {k:max(i) for k, i in my_dict.items()}
     dic_min = {k:min(i) for k, i in my_dict.items()}
 
-    new_dict = mergeDict(dic_max, dic_min)
+    new_dict = mergeDict_1(dic_max, dic_min)
 
     # Volver los valores de la lista en tupla
     for k, v in new_dict.items():
@@ -340,7 +353,7 @@ def pregunta_06():
     dic_max = {k:max(i) for k, i in new_dict.items()}
     dic_min = {k:min(i) for k, i in new_dict.items()}
 
-    new_dict = mergeDict(dic_max, dic_min)
+    new_dict = mergeDict_2(dic_max, dic_min)
 
     # Volver los valores de lista (max y min) en tupla
     for k, v in new_dict.items():
@@ -400,7 +413,7 @@ def pregunta_07():
     my_tuple = [tuple (col_2) for col_2 in col_2]
     my_dict = {}
 
-    Convert(my_tuple, my_dict)
+    Convert_1(my_tuple, my_dict)
 
     list_of_tuples_2 = [(k,v) for k, v in my_dict.items()]
 
@@ -457,7 +470,8 @@ def pregunta_08():
     list_tuple_all
 
     for i in range(len(list(number_col))):
-         x = print(list_tuple_all[i])
+        x = print(list_tuple_all[i])
+
     return x
     
 
@@ -618,7 +632,7 @@ def pregunta_11():
 
     my_dict = {}
 
-    Convert(flat_list_3, my_dict)
+    Convert_1(flat_list_3, my_dict)
 
     sum_dict = {k:sum(i) for k, i in my_dict.items()}
 
