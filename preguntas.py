@@ -11,6 +11,57 @@ Utilice el archivo `data.csv` para resolver las preguntas.
 
 
 """
+from operator import itemgetter
+
+def sum_of_list (l):
+    total = 0
+    for val in l:
+        total = total + val
+    return total
+
+def Convert(tup, di):
+    for a, b in tup:
+        di.setdefault(a, []).append(b)
+    return di
+
+def Convert_1(tup, di):
+    for a, b in tup:
+        di.setdefault(b, []).append(a)
+    return di
+
+
+def mergeDict_1(dict_1, dict_2):
+   new_dict = {**dict_2, **dict_1}
+   for key, value in new_dict.items():
+       if key in dict_1 and key in dict_2:
+               new_dict[key] = [value , dict_2[key]]
+   return new_dict
+
+def mergeDict_2(dict_1, dict_2):
+   new_dict_2 = {**dict_1, **dict_2}
+   for key, value in new_dict_2.items():
+       if key in dict_1 and key in dict_2:
+               new_dict_2[key] = [value , dict_1[key]]
+   return new_dict_2
+
+
+#unir los valores para una misma clave
+def merge_list_of_dictionaries(dict_list):
+  new_dict = {}
+  for d in dict_list:
+    for d_key in d:
+      if d_key not in new_dict:
+        new_dict[d_key] = []
+      new_dict[d_key].append(d[d_key])
+  return new_dict
+
+#Unir el max y el min en un nuevo dic
+def mergeDict(dict_1, dict_2):
+   new_dict_2 = {**dict_1, **dict_2}
+   for key, value in new_dict_2.items():
+       if key in dict_1 and key in dict_2:
+               new_dict_2[key] = [value , dict_1[key]]
+   return new_dict_2
 
 
 def pregunta_01():
@@ -21,7 +72,28 @@ def pregunta_01():
     214
 
     """
-    return
+    with open('data.csv', "r") as file:
+        data = file.readlines()
+    #Limpieza
+
+    #Eliminar el retorno de carro
+    data = [line.replace('\n', '') for line in data]
+
+    #Quitar el espacio en blanco y cambairlo por ','
+    data = [line.replace('\t', ',') for line in data]
+
+    #Crear lista
+    data = [line.split(',') for line in data] 
+
+    #Extraer la columna 2 de la lista dentro de la lista
+    data_col_2 = [data[i][1] for i in  range(len(data))]
+
+    # Volver los valores de la lista números
+    num_col_2 = list(map(int, data_col_2))
+
+    suma = sum_of_list(num_col_2)
+
+    return suma
 
 
 def pregunta_02():
@@ -39,8 +111,33 @@ def pregunta_02():
     ]
 
     """
-    return
+    with open('data.csv', "r") as file:
+        data = file.readlines()
+        #Limpieza
+    
+    #Eliminar el retorno de carro
+    data = [line.replace('\n', '') for line in data]
 
+    #Quitar el espacio en blanco y cambairlo por ','
+    data = [line.replace('\t', ',') for line in data]
+    #Extraer la columna 1 en una nueva lista 
+
+    data_col_1 = [i[0] for i in data [0:]]
+
+    list_ = {}
+
+    #usar get para contar elementos. 
+    # Al llamar get de esta manera obtengo el recuento actual de una letra dada o 0 (valor predetermiando)
+
+    for letter in data_col_1:
+        list_[letter] = list_.get(letter, 0) + 1
+
+    list_num = sorted(list_.items())
+    return list_num
+
+
+
+#Convertir la Tupla en un diccionario dentro de un diccionario
 
 def pregunta_03():
     """
@@ -57,8 +154,41 @@ def pregunta_03():
     ]
 
     """
-    return
+    with open('data.csv', "r") as file:
+        data = file.readlines()
+    #Limpieza
+    
+    #Eliminar el retorno de carro
+    data = [line.replace('\n', '') for line in data]
 
+    #Quitar el espacio en blanco y cambairlo por ','
+    data = [line.replace('\t', ',') for line in data]
+
+    data = [line.split(',') for line in data]
+
+    #Extraer la columna 1 y 2 en una nueva lista 
+
+    col_2 = [data[i][:2] for i in  range(len(data))]
+
+    # Volver los valores de la lista números
+    for line in range(len(col_2)):
+        col_2[line][1] = int(col_2[line][1])
+
+    #Volver la lista en tupla
+    my_tuple = [tuple (l) for l in col_2]
+
+    my_dict = {}
+
+    Convert(my_tuple, my_dict)
+
+    sum_dict = {k:sum(i) for k, i in my_dict.items()}
+
+    list_of_tuples = [(k,v) for k, v in sum_dict.items()]
+
+    list_of_tuples = sorted(list_of_tuples, key = itemgetter(0), reverse=False)
+
+     
+    return list_of_tuples   
 
 def pregunta_04():
     """
@@ -82,7 +212,33 @@ def pregunta_04():
     ]
 
     """
-    return
+    with open('data.csv', "r") as file:
+        data = file.readlines()
+
+    #Eliminar el retorno de carro
+    data = [line.replace('\n', '') for line in data]
+
+    #Quitar el espacio en blanco y cambairlo por ','
+    data = [line.replace('\t', ',') for line in data]
+
+    #crear lista
+    data = [line.split(',') for line in data]
+
+    #extraer filas de fechas
+    fechas = [data[i][2] for i in range(len(data))]
+    mes = [fechas[i][5:7] for i in range(len(data)) ]
+
+    list_ = {}
+
+    #usar get para contar elementos. 
+    # Al llamar get de esta manera obtengo el recuento actual de una letra dada o 0 (valor predetermiando)
+
+    for M in mes:
+        list_[M] = list_.get(M, 0) + 1
+
+    list_num = sorted(list_.items())
+    
+    return list_num
 
 
 def pregunta_05():
@@ -100,7 +256,50 @@ def pregunta_05():
     ]
 
     """
-    return
+    with open('data.csv', "r") as file:
+        data = file.readlines()
+    #Limpieza
+        
+    #Eliminar el retorno de carro
+    data = [line.replace('\n', '') for line in data]
+
+    #Quitar el espacio en blanco y cambairlo por ','
+    data = [line.replace('\t', ',') for line in data]
+
+    data = [line.split(',') for line in data]
+
+    #Extraer la columna 1 y 2 en una nueva lista 
+
+    col_2 = [data[i][:2] for i in  range(len(data))]
+
+    # Volver los valores de la lista en int
+    for line in range(len(col_2)):
+        col_2[line][1] = int(col_2[line][1])
+
+    #Volver la lista en tupla
+    my_tuple = [tuple (col_2) for col_2 in col_2]
+
+    my_dict = {}
+
+    Convert(my_tuple, my_dict)
+
+    dic_max = {k:max(i) for k, i in my_dict.items()}
+    dic_min = {k:min(i) for k, i in my_dict.items()}
+
+    new_dict = mergeDict_1(dic_max, dic_min)
+
+    # Volver los valores de la lista en tupla
+    for k, v in new_dict.items():
+        new_dict[k] = tuple(v)
+
+    list_of_tuples = [(k,v) for (k, v) in new_dict.items()]
+
+    #Quitar la tupla dentro de la tupla
+    list_good_1 = [(x, y, z) for x, (y, z) in list_of_tuples]
+
+    list_good_1 = sorted(list_good_1, key = itemgetter(0), reverse=False)
+
+    return list_good_1
 
 
 def pregunta_06():
@@ -125,7 +324,49 @@ def pregunta_06():
     ]
 
     """
-    return
+    with open('data.csv', "r") as file:
+        data = file.readlines()
+    #Limpieza
+    
+    #Eliminar el retorno de carro
+    data = [line.replace('\n', '') for line in data]
+
+    #Quitar el espacio en blanco y cambairlo por ','
+    data = [line.replace('\t', ',') for line in data]
+
+    data = [line.split(',') for line in data]
+
+    lista_diccionario = [[value for value in row if len(value) >=5] for row in data]
+    lista_diccionario = [row[1:] for row in lista_diccionario]
+
+    diccionario = {}
+    parte_3 = []
+    for row in lista_diccionario:
+        for i in range(len(row)):
+            a,b =row[i].split(":")
+            diccionario[a] = int(b)
+            parte_3.append(diccionario)
+            diccionario = {}
+   #diccionario con los valores para cada key
+    new_dict = merge_list_of_dictionaries(parte_3)
+    #max y min de cada valor
+    dic_max = {k:max(i) for k, i in new_dict.items()}
+    dic_min = {k:min(i) for k, i in new_dict.items()}
+
+    new_dict = mergeDict_2(dic_max, dic_min)
+
+    # Volver los valores de lista (max y min) en tupla
+    for k, v in new_dict.items():
+        new_dict[k] = tuple(v)
+
+    list_of_tuples = [(k,v) for (k, v) in new_dict.items()]
+
+    list_good_2 = [(x, y, z) for x, (y, z) in list_of_tuples]
+
+    list_good_2 = sorted(list_good_2, key = itemgetter(0), reverse=False)
+
+    return list_good_2  
+
 
 
 def pregunta_07():
@@ -149,7 +390,37 @@ def pregunta_07():
     ]
 
     """
-    return
+    with open('data.csv', "r") as file:
+        data = file.readlines()
+    #Limpieza
+        
+    #Eliminar el retorno de carro
+    data = [line.replace('\n', '') for line in data]
+
+    #Quitar el espacio en blanco y cambairlo por ','
+    data = [line.replace('\t', ',') for line in data]
+
+    data = [line.split(',') for line in data]
+
+    #Extraer la columna 1 y 2 en una nueva lista 
+    col_2 = [data[i][:2] for i in  range(len(data))]
+
+    # Volver los valores de la lista en int
+    for line in range(len(col_2)):
+        col_2[line][1] = int(col_2[line][1])
+
+    #Volver la lista en tupla
+    my_tuple = [tuple (col_2) for col_2 in col_2]
+    my_dict = {}
+
+    Convert_1(my_tuple, my_dict)
+
+    list_of_tuples_2 = [(k,v) for k, v in my_dict.items()]
+
+    list_of_tuples_2 = sorted(list_of_tuples_2, key = itemgetter(0), reverse=False)
+
+    return list_of_tuples_2
+
 
 
 def pregunta_08():
@@ -174,7 +445,29 @@ def pregunta_08():
     ]
 
     """
-    return
+    with open('data.csv', "r") as file:
+        data = file.readlines()
+
+    #Limpieza
+        
+    #Eliminar el retorno de carro
+    data = [line.replace('\n', '') for line in data]
+
+    #Quitar el espacio en blanco y cambairlo por ','
+    data = [line.replace('\t', ',') for line in data]
+
+    data = [line.split(',') for line in data]
+
+    line = [[i[0], i[1]] for i in data ]
+    keys = sorted(set([int(ii[1]) for ii in data]))
+
+    dict_count = {d: [] for d in keys}
+
+    for [ii, jj] in line:
+        dict_count[int(jj)].append(ii)
+
+    return [(k, sorted(set(v))) for k, v in dict_count.items()]
+    
 
 
 def pregunta_09():
@@ -197,7 +490,35 @@ def pregunta_09():
     }
 
     """
-    return
+    with open('data.csv', "r") as file:
+        data = file.readlines()
+    #Limpieza
+        
+    #Eliminar el retorno de carro
+    data = [line.replace('\n', '') for line in data]
+
+    #Quitar el espacio en blanco y cambairlo por ','
+    data = [line.replace('\t', ',') for line in data]
+
+    data = [line.split(',') for line in data]
+    #Sacar las posiciones de los elementos mayores a 5
+    lista_diccionario = [[value for value in row if len(value) >=5] for row in data]
+    #Eliminar los valores 0 de la lista anterior
+    lista_diccionario = [row[1:] for row in lista_diccionario]
+
+    #dividir el str por los ':'
+    list_key = []
+    for row in lista_diccionario:
+        for i in range(len(row)):
+            a,b =row[i].split(":")
+            list_key.append(a)
+        list_key
+
+    #volver la lista diccionario organizado
+    my_list = dict(sorted((a, list_key.count(a)) for a in set(list_key)))
+   
+
+    return my_list
 
 
 def pregunta_10():
@@ -218,8 +539,36 @@ def pregunta_10():
 
 
     """
-    return
+    with open('data.csv', "r") as file:
+        data = file.readlines()
+    #Limpieza
+        
+    #Eliminar el retorno de carro
+    data = [line.replace('\n', '') for line in data]
 
+    #Quitar el espacio en blanco y cambiarlo por ','
+    data = [line.replace('\t', ',') for line in data]
+
+    data = [line.split(',') for line in data]
+    #Parto primera parte
+    col_1=[row[0:1] for row in data]
+
+    col_4 = [[letter for letter in line if letter.isalpha() and len(letter) ==1 and letter.islower()] for line in data ]
+
+    #Sacar las posiciones de los elementos mayores a 5
+    lista_diccionario = [[value for value in row if len(value) >=5] for row in data]
+    #Eliminar los valores 0 de la lista anterior
+    lista_diccionario = [row[1:] for row in lista_diccionario]
+
+    ElementosColumna4=[len(list(row)) for row in col_4]
+
+    ElementosColumna5=[len(list(row)) for row in lista_diccionario]
+
+    list_unida = [list([col_1[i][0], ElementosColumna4[i], ElementosColumna5[i]]) for i in range(len(col_1))]
+
+    list_of_tuples_3 = [(a, b, c) for (a, b, c) in list_unida]
+
+    return list_of_tuples_3
 
 def pregunta_11():
     """
@@ -239,7 +588,54 @@ def pregunta_11():
 
 
     """
-    return
+    with open('data.csv', "r") as file:
+        data = file.readlines()
+
+    #Limpieza
+        
+    #Eliminar el retorno de carro
+    data = [line.replace('\n', '') for line in data]
+
+    #Quitar el espacio en blanco y cambiarlo por ','
+    data = [line.replace('\t', ',') for line in data]
+
+    data = [line.split(',') for line in data]
+
+    #Extraigo col 2
+
+    col_2 = [data[i][1:2] for i in  range(len(data))]
+
+    flat_list = [item for sublist in col_2 for item in sublist]
+
+    # Volver los valores de la lista en int
+    for line in range(len(flat_list)):
+        flat_list[line] = int(flat_list[line])
+
+    #Extraigo col 4
+    col_4 = [[letter.split(',') for letter in line if letter.isalpha() and len(letter) ==1 and letter.islower()] for line in data ]
+
+    flat_list_2 = [[item for sublist in col_4[i] for item in sublist] for i in range(len(col_4))]
+
+    #lista_unida
+
+    list_unida = [[list([flat_list[row], flat_list_2[row][i]]) for i in range(len(flat_list_2[row]))] for row in range(len(flat_list_2))]
+
+    my_tuple = [[tuple(list_unida[row][i]) for i in range(len(list_unida[row]))] for row in range(len(list_unida))]
+
+    flat_list_3 = [item for sublist in my_tuple for item in sublist]
+
+    my_dict = {}
+
+    Convert_1(flat_list_3, my_dict)
+
+    sum_dict = {k:sum(i) for k, i in my_dict.items()}
+
+    list_sum_dict = sorted(sum_dict.items(), key = lambda x: x[0])
+
+    sort_values = dict(list_sum_dict)
+
+    return sort_values
+
 
 
 def pregunta_12():
@@ -257,4 +653,51 @@ def pregunta_12():
     }
 
     """
-    return
+    with open('data.csv', "r") as file:
+         data = file.readlines()
+    #Limpieza
+        
+    #Eliminar el retorno de carro
+    data = [line.replace('\n', '') for line in data]
+
+    #Quitar el espacio en blanco y cambiarlo por ','
+    data = [line.replace('\t', ',') for line in data]
+
+    data = [line.split(',') for line in data]
+
+    #Extraigo col 1
+
+    col_1 = [data[i][0:1] for i in  range(len(data))]
+
+    flat_list = [item for sublist in col_1 for item in sublist]
+
+    #Sacar las posiciones de los elementos mayores a 5
+    lista_diccionario = [[value for value in row if len(value) >=5] for row in data]
+    #Eliminar los valores 0 de la lista anterior
+    lista_diccionario = [row[1:] for row in lista_diccionario]
+    lista_diccionario
+    #Listas unidas
+    diccionario = {}
+    parte_3 = []
+    for row in lista_diccionario:
+        for i in range(len(row)):
+             a,b =row[i].split(":")
+             diccionario[a] = int(b)
+        parte_3.append(diccionario)
+        diccionario = {}
+
+    values = [list(parte_3[i].values()) for i in range(len(parte_3))]
+    list_suma = [sum(row) for row in values]
+
+    list_unida =[(flat_list[i][0], list_suma[i]) for i in range(len(flat_list))]
+
+    my_dict = {}
+    Convert(list_unida, my_dict)
+
+    sum_dict = {k:sum(i) for k, i in my_dict.items()}
+
+    list_sum_dict = sorted(sum_dict.items(), key = lambda x: x[0])
+
+    sort_values = dict(list_sum_dict)
+
+    return  sort_values
