@@ -458,19 +458,15 @@ def pregunta_08():
 
     data = [line.split(',') for line in data]
 
-    #Extraer la columna 1 y 2 en una nueva lista 
-    col_2 = [data[i][:2] for i in  range(len(data))]
+    line = [[i[0], i[1]] for i in data ]
+    keys = sorted(set([int(ii[1]) for ii in data]))
 
-    list_tuple = sorted([row[0:2]for row in col_2])
+    dict_count = {d: [] for d in keys}
 
-    number_col = set([row[1] for row in list_tuple])
+    for [ii, jj] in line:
+        dict_count[int(jj)].append(ii)
 
-    list_tuple_all = sorted([((value,sorted(list(set(row[0] for row in list_tuple if value in row[1])))))for value in number_col],key=itemgetter(0), reverse = False)
-
-    #for i in range(len(list(number_col))):
-        #x = print(list_tuple_all[i])
-
-    return list_tuple_all
+    return [(k, sorted(set(v))) for k, v in dict_count.items()]
     
 
 
